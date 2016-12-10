@@ -2,7 +2,7 @@ import gevent, pickle, struct, time, logging, traceback
 import gevent.queue
 import gevent.event
 import gevent.socket
-
+import datetime
 class CarbonEmitter(object):
 
     def __init__(self, carbon_address):
@@ -22,7 +22,9 @@ class CarbonEmitter(object):
         for i in data:
             self.data.put(i)
 
-    def add_metric(self,path,value,timestamp = time.time()):
+    def add_metric(self,path,value,timestamp = None):
+        if not timestamp:
+            timestamp = datetime.datetime.now()
         self.data.put((path,(timestamp,value)))
 
     def send(self):
