@@ -2,7 +2,7 @@ import gevent, pickle, struct, time, logging, traceback
 import gevent.queue
 import gevent.event
 import gevent.socket
-import datetime
+import datetime, time
 class CarbonEmitter(object):
 
     def __init__(self, carbon_address):
@@ -24,7 +24,7 @@ class CarbonEmitter(object):
 
     def add_metric(self,path,value,timestamp = None):
         if not timestamp:
-            timestamp = datetime.datetime.now()
+            timestamp = time.time()
         self.data.put((path,(timestamp,value)))
 
     def send(self):
@@ -85,6 +85,6 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
     c = CarbonEmitter(('century.homersinn.net', 2004))
     c.start()
-    c.add_metric("enlight.controllers.pool_pumps","1")
+    c.add_metric("test.test","7")
     c.stop()
     gevent.wait()
