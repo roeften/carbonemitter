@@ -4,6 +4,11 @@ import time
 
 
 class CarbonEmitter(object):
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
 
     def __init__(self, carbon_address, loop = None, decimal_resolution = 6):
         """
@@ -21,12 +26,26 @@ class CarbonEmitter(object):
                 Defaults to 6 (Python 2). Set to None to skip fixing timestamps.
         """
 
+<<<<<<< HEAD
+=======
+=======
+
+    def __init__(self, carbon_address, loop = None):
+>>>>>>> 1820f1a0ec0a7f5a7d6c8e198de2c58e09be63b6
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
         if loop:
             self.loop = loop
         else:
             self.loop = asyncio.get_event_loop()
 
+<<<<<<< HEAD
         self.fix_ts = decimal_resolution
+=======
+<<<<<<< HEAD
+        self.fix_ts = decimal_resolution
+=======
+>>>>>>> 1820f1a0ec0a7f5a7d6c8e198de2c58e09be63b6
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
         self.run = False
         self.carbon_address = carbon_address
       
@@ -42,6 +61,10 @@ class CarbonEmitter(object):
  
     # data is a list of tuples like [(path, (timestamp,value)),....]
     def add(self, data):
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
         asyncio.ensure_future(self.send_multiple(data),loop=self.loop)
 
     # returns the future
@@ -52,16 +75,45 @@ class CarbonEmitter(object):
 
         if self.fix_ts:
             timestamp = round(timestamp,self.fix_ts)
+<<<<<<< HEAD
+=======
+=======
+        for i in data:
+            asyncio.ensure_future(self.send_multiple(i),loop=self.loop)
+
+    # returns the future
+    def add_metric(self,path,value,timestamp = None):
+        # weird carbon does not seem to accept floats longer than 6 dd, maybe a pickle issue, same fix_imports is either.
+        if not timestamp:
+            timestamp = round(time.time(),6)
+        else:
+            timestamp = round(timestamp,6)
+>>>>>>> 1820f1a0ec0a7f5a7d6c8e198de2c58e09be63b6
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
 
         return asyncio.ensure_future(self.send([(path,(timestamp,value))]),loop=self.loop)
 
 
     # does not fix the timestamps
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
     async def send_multiple(self,data):
             if self.fix_ts:
                 d = []
                 for i in data:
                     d.append((i[0],(round(i[1][0],self.fix_ts),i[1][1])))
+<<<<<<< HEAD
+=======
+=======
+    async def send_multiple(self,data, fixTimestamps = True):
+            if fixTimestamps:
+                d = []
+                for i in data:
+                    d.append((i[0],(round(i[1][0],6),i[1][1])))
+>>>>>>> 1820f1a0ec0a7f5a7d6c8e198de2c58e09be63b6
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
              
                 await self.send(d)
             else:
@@ -102,9 +154,21 @@ class CarbonEmitter(object):
 if __name__ == '__main__':
 
     logging.getLogger().setLevel(logging.DEBUG)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
     c = CarbonEmitter(('carbon.example.com', 2004))
     c.start()
     c.loop.run_until_complete(c.add_metric("test.test","9"))
     c.stop()
+<<<<<<< HEAD
+=======
+=======
+    c = CarbonEmitter(('century.homersinn.net', 2004))
+    c.start()
+    c.loop.run_until_complete(c.add_metric("test.test","9"))
+>>>>>>> 1820f1a0ec0a7f5a7d6c8e198de2c58e09be63b6
+>>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
     c.loop.stop()
     
