@@ -4,12 +4,6 @@ import time
 
 
 class CarbonEmitter(object):
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    
->>>>>>> 02aa7d1dcc222a221dcbed0b55e7859e3a3f8b3c
-
     def __init__(self, carbon_address, loop = None, decimal_resolution = 6):
         """
             Instantiate asyncio Carbon emitter.
